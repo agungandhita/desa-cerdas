@@ -58,15 +58,15 @@
                                         <i class="fas fa-edit mr-2"></i>
                                         Draft
                                     </span>
-                                @elseif($apbdes->status == 'aktif')
+                                @elseif($apbdes->status == 'approved')
                                     <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800">
                                         <i class="fas fa-check-circle mr-2"></i>
-                                        Aktif
+                                        Approved
                                     </span>
                                 @else
                                     <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-slate-100 text-slate-800">
                                         <i class="fas fa-flag-checkered mr-2"></i>
-                                        Selesai
+                                        Executed
                                     </span>
                                 @endif
                             </div>
@@ -227,13 +227,13 @@
                                 </div>
                             </div>
                         </div>
-                    @elseif($apbdes->status == 'aktif')
+                    @elseif($apbdes->status == 'approved')
                         <div class="bg-green-50 border border-green-200 rounded-lg p-4">
                             <div class="flex items-start">
                                 <i class="fas fa-check-circle text-green-600 mt-1 mr-3"></i>
                                 <div>
-                                    <h4 class="text-sm font-medium text-green-800">Status Aktif</h4>
-                                    <p class="text-sm text-green-700 mt-1">Anggaran sedang berjalan dan dapat direalisasikan.</p>
+                                    <h4 class="text-sm font-medium text-green-800">Status Approved</h4>
+                                    <p class="text-sm text-green-700 mt-1">Anggaran telah disetujui dan dapat direalisasikan.</p>
                                 </div>
                             </div>
                         </div>
@@ -242,7 +242,7 @@
                             <div class="flex items-start">
                                 <i class="fas fa-flag-checkered text-slate-600 mt-1 mr-3"></i>
                                 <div>
-                                    <h4 class="text-sm font-medium text-slate-800">Status Selesai</h4>
+                                    <h4 class="text-sm font-medium text-slate-800">Status Executed</h4>
                                     <p class="text-sm text-slate-700 mt-1">Anggaran telah selesai dilaksanakan.</p>
                                 </div>
                             </div>

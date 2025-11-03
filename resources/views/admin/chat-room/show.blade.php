@@ -3,7 +3,7 @@
 @section('title', $chatRoom->name)
 
 @section('container')
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-20">
     <!-- Header -->
     <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6">
         <div class="mb-4 sm:mb-0">
@@ -18,11 +18,11 @@
             <p class="text-gray-600">{{ $chatRoom->description }}</p>
         </div>
         <div class="flex space-x-2">
-            <a href="{{ route('admin.chat-room.edit', $chatRoom) }}" 
+            <a href="{{ route('admin.chat-room.edit', $chatRoom) }}"
                class="inline-flex items-center px-4 py-2 bg-yellow-500 hover:bg-yellow-600 text-white text-sm font-medium rounded-lg shadow-sm transition-colors duration-200">
                 <i class="fas fa-edit mr-2"></i> Edit
             </a>
-            <a href="{{ route('admin.chat-room.index') }}" 
+            <a href="{{ route('admin.chat-room.index') }}"
                class="inline-flex items-center px-4 py-2 bg-gray-500 hover:bg-gray-600 text-white text-sm font-medium rounded-lg shadow-sm transition-colors duration-200">
                 <i class="fas fa-arrow-left mr-2"></i> Kembali
             </a>
@@ -48,7 +48,7 @@
                         @endif
                     </div>
                 </div>
-                
+
                 <!-- Messages Container -->
                 <div class="p-0 overflow-y-auto" style="height: calc(100% - 140px);" id="messages-container">
                     <div id="messages-list" class="p-3">
@@ -66,13 +66,13 @@
                                 <i class="fas fa-paperclip"></i>
                             </button>
                             <input type="file" id="file-input" class="hidden" accept="image/*,application/pdf,.doc,.docx">
-                            
+
                             <div class="flex-1">
-                                <textarea class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 resize-none" 
-                                          id="message-input" name="message" 
+                                <textarea class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 resize-none"
+                                          id="message-input" name="message"
                                           placeholder="Ketik pesan Anda..." rows="1"></textarea>
                             </div>
-                            
+
                             <button type="submit" class="flex-shrink-0 p-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors duration-200" id="send-btn">
                                 <i class="fas fa-paper-plane"></i>
                             </button>
@@ -160,30 +160,30 @@
                 <div class="px-6 py-4">
                     <div class="space-y-2">
                         @if($chatRoom->status === 'active')
-                            <button onclick="updateRoomStatus('closed')" 
+                            <button onclick="updateRoomStatus('closed')"
                                     class="w-full inline-flex items-center justify-center px-4 py-2 bg-yellow-500 hover:bg-yellow-600 text-white text-sm font-medium rounded-lg transition-colors duration-200">
                                 <i class="fas fa-pause mr-2"></i> Tutup Room
                             </button>
                         @elseif($chatRoom->status === 'closed')
-                            <button onclick="updateRoomStatus('active')" 
+                            <button onclick="updateRoomStatus('active')"
                                     class="w-full inline-flex items-center justify-center px-4 py-2 bg-green-500 hover:bg-green-600 text-white text-sm font-medium rounded-lg transition-colors duration-200">
                                 <i class="fas fa-play mr-2"></i> Buka Room
                             </button>
                         @endif
-                        
+
                         @if($chatRoom->status !== 'archived')
-                            <button onclick="updateRoomStatus('archived')" 
+                            <button onclick="updateRoomStatus('archived')"
                                     class="w-full inline-flex items-center justify-center px-4 py-2 bg-gray-500 hover:bg-gray-600 text-white text-sm font-medium rounded-lg transition-colors duration-200">
                                 <i class="fas fa-archive mr-2"></i> Arsipkan
                             </button>
                         @endif
-                        
-                        <button onclick="exportMessages()" 
+
+                        <button onclick="exportMessages()"
                                 class="w-full inline-flex items-center justify-center px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white text-sm font-medium rounded-lg transition-colors duration-200">
                             <i class="fas fa-download mr-2"></i> Export Chat
                         </button>
-                        
-                        <button onclick="confirmDelete()" 
+
+                        <button onclick="confirmDelete()"
                                 class="w-full inline-flex items-center justify-center px-4 py-2 bg-red-500 hover:bg-red-600 text-white text-sm font-medium rounded-lg transition-colors duration-200">
                             <i class="fas fa-trash mr-2"></i> Hapus Room
                         </button>
@@ -214,14 +214,14 @@
                 </div>
             </div>
             <div class="flex justify-end space-x-3">
-                <button type="button" onclick="closeDeleteModal()" 
+                <button type="button" onclick="closeDeleteModal()"
                         class="px-4 py-2 bg-gray-300 hover:bg-gray-400 text-gray-800 text-sm font-medium rounded-lg transition-colors duration-200">
                     Batal
                 </button>
                 <form action="{{ route('admin.chat-room.destroy', $chatRoom) }}" method="POST" class="inline">
                     @csrf
                     @method('DELETE')
-                    <button type="submit" 
+                    <button type="submit"
                             class="px-4 py-2 bg-red-600 hover:bg-red-700 text-white text-sm font-medium rounded-lg transition-colors duration-200">
                         Ya, Hapus
                     </button>
@@ -234,7 +234,7 @@
 <!-- Image Preview Modal -->
 <div id="imageModal" class="fixed inset-0 bg-black bg-opacity-75 z-50 hidden items-center justify-center p-4">
     <div class="relative max-w-4xl max-h-full">
-        <button onclick="closeImageModal()" 
+        <button onclick="closeImageModal()"
                 class="absolute top-4 right-4 text-white hover:text-gray-300 text-2xl z-10">
             <i class="fas fa-times"></i>
         </button>
@@ -343,39 +343,39 @@ $(document).ready(function() {
     // Load initial messages
     loadMessages();
     loadParticipants();
-    
+
     // Start polling for new messages
     startMessagePolling();
-    
+
     // Auto-resize message input
     $('#message-input').on('input', function() {
         this.style.height = 'auto';
         this.style.height = (this.scrollHeight) + 'px';
     });
-    
+
     // Handle message form submission
     $('#message-form').on('submit', function(e) {
         e.preventDefault();
         sendMessage();
     });
-    
+
     // Handle file upload button
     $('#file-upload-btn').on('click', function() {
         $('#file-input').click();
     });
-    
+
     // Handle file selection
     $('#file-input').on('change', function() {
         if (this.files.length > 0) {
             showFilePreview(this.files[0]);
         }
     });
-    
+
     // Handle remove file
     $('#remove-file').on('click', function() {
         removeFilePreview();
     });
-    
+
     // Handle Enter key in message input
     $('#message-input').on('keydown', function(e) {
         if (e.key === 'Enter' && !e.shiftKey) {
@@ -417,19 +417,19 @@ function displayMessages(messages) {
 function formatMessage(message) {
     let messageClass = 'message-other';
     let headerHtml = `<div class="message-header">${message.user.name}</div>`;
-    
+
     if (message.user_id == currentUserId) {
         messageClass = 'message-own';
         headerHtml = '';
     }
-    
+
     if (message.message_type === 'system') {
         messageClass = 'message-system';
         headerHtml = '';
     }
-    
+
     let contentHtml = '';
-    
+
     // Handle image messages
     if (message.message_type === 'image' && message.file_path) {
         console.log('Image URL:', message.file_url); // Debug log
@@ -437,14 +437,14 @@ function formatMessage(message) {
         const encodedUrl = encodeURI(message.file_url);
         contentHtml += `
             <div class="message-image mb-3">
-                <img src="${encodedUrl}" alt="${message.file_name}" 
+                <img src="${encodedUrl}" alt="${message.file_name}"
                      class="max-w-xs rounded-lg shadow-sm cursor-pointer hover:shadow-md transition-shadow duration-200"
                      onclick="showImageModal('${encodedUrl}', '${message.file_name}')"
                      onerror="console.error('Failed to load image:', this.src); this.style.display='none';">
             </div>
         `;
     }
-    
+
     // Handle file messages
     if (message.message_type === 'file' && message.file_path) {
         contentHtml += `
@@ -458,14 +458,14 @@ function formatMessage(message) {
             </div>
         `;
     }
-    
+
     // Handle text message
     if (message.message) {
         contentHtml += `<div class="message-text">${message.message.replace(/\n/g, '<br>')}</div>`;
     }
-    
+
     let timeHtml = `<div class="message-time">${message.time_ago}</div>`;
-    
+
     return `
         <div class="message-item ${messageClass}" data-message-id="${message.id}">
             ${headerHtml}
@@ -478,21 +478,21 @@ function formatMessage(message) {
 function sendMessage() {
     let message = $('#message-input').val().trim();
     let fileInput = $('#file-input')[0];
-    
+
     if (!message && !fileInput.files.length) {
         return;
     }
-    
+
     let formData = new FormData();
     formData.append('_token', $('meta[name="csrf-token"]').attr('content'));
     formData.append('message', message);
-    
+
     if (fileInput.files.length > 0) {
         formData.append('file', fileInput.files[0]);
     }
-    
+
     $('#send-btn').prop('disabled', true);
-    
+
     $.ajax({
         url: `/admin/chat-room/${chatRoomId}/messages`,
         method: 'POST',
@@ -502,7 +502,7 @@ function sendMessage() {
         success: function(response) {
             $('#message-input').val('');
             removeFilePreview();
-            
+
             // Add the new message to the list instead of reloading all messages
             if (response.success && response.message) {
                 $('#messages-list').append(formatMessage(response.message));
@@ -513,13 +513,13 @@ function sendMessage() {
         error: function(xhr) {
             console.error('Error sending message:', xhr.responseText);
             let errorMessage = 'Gagal mengirim pesan. Silakan coba lagi.';
-            
+
             if (xhr.responseJSON && xhr.responseJSON.message) {
                 errorMessage = xhr.responseJSON.message;
             } else if (xhr.responseJSON && xhr.responseJSON.errors) {
                 errorMessage = Object.values(xhr.responseJSON.errors).flat().join(', ');
             }
-            
+
             alert(errorMessage);
         },
         complete: function() {
@@ -599,21 +599,21 @@ function editMessage(messageId) {
     // Get the message element
     const messageElement = $(`.message-item[data-message-id="${messageId}"]`);
     const messageText = messageElement.find('.message-text').text().trim();
-    
+
     // Create edit form
     const editForm = `
         <div class="edit-message-form bg-gray-50 p-3 rounded-lg">
-            <textarea class="w-full p-2 border border-gray-300 rounded-lg resize-none" 
+            <textarea class="w-full p-2 border border-gray-300 rounded-lg resize-none"
                       rows="3" id="edit-message-${messageId}">${messageText}</textarea>
             <div class="flex justify-end space-x-2 mt-2">
-                <button type="button" class="px-3 py-1 text-sm bg-gray-500 text-white rounded hover:bg-gray-600" 
+                <button type="button" class="px-3 py-1 text-sm bg-gray-500 text-white rounded hover:bg-gray-600"
                         onclick="cancelEdit(${messageId})">Batal</button>
-                <button type="button" class="px-3 py-1 text-sm bg-blue-500 text-white rounded hover:bg-blue-600" 
+                <button type="button" class="px-3 py-1 text-sm bg-blue-500 text-white rounded hover:bg-blue-600"
                         onclick="saveEdit(${messageId})">Simpan</button>
             </div>
         </div>
     `;
-    
+
     // Replace message content with edit form
     messageElement.find('.message-content').html(editForm);
 }
@@ -625,12 +625,12 @@ function cancelEdit(messageId) {
 
 function saveEdit(messageId) {
     const newMessage = $(`#edit-message-${messageId}`).val().trim();
-    
+
     if (!newMessage) {
         alert('Pesan tidak boleh kosong');
         return;
     }
-    
+
     $.ajax({
         url: `/admin/chat-room/messages/${messageId}`,
         method: 'PUT',
@@ -672,14 +672,14 @@ function showImageModal(imageUrl, imageName) {
     $('#modalImage').attr('src', imageUrl).attr('alt', imageName);
     $('#modalImageName').text(imageName);
     $('#imageModal').removeClass('hidden').addClass('flex');
-    
+
     // Close modal when clicking outside the image
     $('#imageModal').on('click', function(e) {
         if (e.target === this) {
             closeImageModal();
         }
     });
-    
+
     // Close modal with Escape key
     $(document).on('keydown.imageModal', function(e) {
         if (e.key === 'Escape') {
@@ -692,7 +692,7 @@ function closeImageModal() {
     $('#imageModal').addClass('hidden').removeClass('flex');
     $('#modalImage').attr('src', '').attr('alt', '');
     $('#modalImageName').text('');
-    
+
     // Remove event listeners
     $('#imageModal').off('click');
     $(document).off('keydown.imageModal');

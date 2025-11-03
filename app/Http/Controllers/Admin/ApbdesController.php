@@ -84,7 +84,7 @@ class ApbdesController extends Controller
             'jumlah_anggaran' => 'required|numeric|min:0',
             'realisasi' => 'nullable|numeric|min:0',
             'deskripsi' => 'nullable|string',
-            'status' => 'required|in:draft,aktif,selesai',
+            'status' => 'required|in:draft,approved,executed',
         ]);
 
         try {
@@ -124,7 +124,7 @@ class ApbdesController extends Controller
             'jumlah_anggaran' => 'required|numeric|min:0',
             'realisasi' => 'nullable|numeric|min:0',
             'deskripsi' => 'nullable|string',
-            'status' => 'required|in:draft,aktif,selesai',
+            'status' => 'required|in:draft,approved,executed',
         ]);
 
         try {

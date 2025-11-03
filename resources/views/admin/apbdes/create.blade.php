@@ -53,8 +53,8 @@
                             class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent @error('status') border-red-500 @enderror">
                         <option value="">Pilih Status</option>
                         <option value="draft" {{ old('status') == 'draft' ? 'selected' : '' }}>Draft</option>
-                        <option value="aktif" {{ old('status') == 'aktif' ? 'selected' : '' }}>Aktif</option>
-                        <option value="selesai" {{ old('status') == 'selesai' ? 'selected' : '' }}>Selesai</option>
+                        <option value="approved" {{ old('status') == 'approved' ? 'selected' : '' }}>Approved</option>
+                        <option value="executed" {{ old('status') == 'executed' ? 'selected' : '' }}>Executed</option>
                     </select>
                     @error('status')
                         <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
