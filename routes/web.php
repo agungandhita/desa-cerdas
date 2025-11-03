@@ -8,6 +8,12 @@ use App\Http\Controllers\Admin\ChatRoomController;
 use App\Http\Controllers\Admin\ProdukUmkmController;
 use App\Http\Controllers\Admin\LokasiDesaController;
 use App\Http\Controllers\Admin\ApbdesController;
+use App\Http\Controllers\Frontend\HomeController;
+use App\Http\Controllers\Frontend\BeritaController as FrontendBeritaController;
+use App\Http\Controllers\Frontend\ProdukUmkmController as FrontendProdukUmkmController;
+use App\Http\Controllers\Frontend\LayananController;
+use App\Http\Controllers\Frontend\ApbdesController as FrontendApbdesController;
+use App\Http\Controllers\Frontend\ForumController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -21,19 +27,70 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+// Frontend Routes
+Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/tentang', [HomeController::class, 'about'])->name('tentang');
+Route::get('/kontak', [HomeController::class, 'contact'])->name('kontak');
+
+// Frontend Berita Routes
+Route::prefix('berita')->name('berita.')->group(function () {
+    Route::get('/', [FrontendBeritaController::class, 'index'])->name('index');
+    Route::get('/kategori/{category?}', [FrontendBeritaController::class, 'category'])->name('category');
+    Route::get('/{slug}', [FrontendBeritaController::class, 'show'])->name('show');
 });
 
-// Default dashboard route - redirect to admin dashboard
-Route::get('/dashboard', function () {
-    return redirect()->route('admin.dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+// Frontend UMKM Routes
+Route::prefix('umkm')->name('umkm.')->group(function () {
+    Route::get('/', [FrontendProdukUmkmController::class, 'index'])->name('index');
+    Route::get('/kategori/{kategori}', [FrontendProdukUmkmController::class, 'category'])->name('category');
+    Route::get('/penjual/{userId}', [FrontendProdukUmkmController::class, 'seller'])->name('seller');
+    Route::get('/{slug}', [FrontendProdukUmkmController::class, 'show'])->name('show');
+});
 
-// Admin Dashboard Route
+// Frontend Layanan Publik Routes
+Route::prefix('layanan')->name('layanan.')->group(function () {
+    Route::get('/', [LayananController::class, 'index'])->name('index');
+    Route::get('/info/{jenis}', [LayananController::class, 'info'])->name('info');
+    Route::get('/ajukan/{jenis?}', [LayananController::class, 'create'])->name('create');
+    Route::post('/ajukan', [LayananController::class, 'store'])->name('store');
+    Route::get('/riwayat', [LayananController::class, 'riwayat'])->name('riwayat');
+    Route::get('/detail/{id}', [LayananController::class, 'show'])->name('show');
+});
+
+// Frontend APBDes Routes
+Route::prefix('apbdes')->name('apbdes.')->group(function () {
+    Route::get('/', [FrontendApbdesController::class, 'index'])->name('index');
+    Route::get('/bidang/{bidang}', [FrontendApbdesController::class, 'sector'])->name('sector');
+    Route::get('/perbandingan', [FrontendApbdesController::class, 'comparison'])->name('comparison');
+    Route::get('/ringkasan', [FrontendApbdesController::class, 'summary'])->name('summary');
+});
+
+// Frontend Forum Routes
+Route::prefix('forum')->name('forum.')->group(function () {
+    Route::get('/', [ForumController::class, 'index'])->name('index');
+    Route::get('/buat', [ForumController::class, 'create'])->name('create');
+    Route::post('/buat', [ForumController::class, 'store'])->name('store');
+    Route::get('/kategori/{kategori}', [ForumController::class, 'category'])->name('category');
+    Route::get('/diskusi-saya', [ForumController::class, 'myDiscussions'])->name('my-discussions');
+    Route::get('/{id}', [ForumController::class, 'show'])->name('show');
+    Route::get('/{id}/edit', [ForumController::class, 'edit'])->name('edit');
+    Route::put('/{id}', [ForumController::class, 'update'])->name('update');
+    Route::delete('/{id}', [ForumController::class, 'destroy'])->name('destroy');
+    Route::post('/{id}/komentar', [ForumController::class, 'storeComment'])->name('comment.store');
+});
+
+// Admin Dashboard Route - redirect to admin dashboard
 Route::get('/admin/dashboard', [DashboardController::class, 'index'])
     ->middleware(['auth', 'verified'])
     ->name('admin.dashboard');
+
+// Default dashboard route - redirect to admin dashboard for authenticated users
+Route::get('/dashboard', function () {
+    if (auth()->check()) {
+        return redirect()->route('admin.dashboard');
+    }
+    return redirect()->route('home');
+})->middleware(['auth', 'verified'])->name('dashboard');
 
 // Admin Permohonan Surat Routes
 Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(function () {
