@@ -35,11 +35,22 @@
 document.addEventListener('DOMContentLoaded', function() {
     // Hide loading overlay
     const loadingOverlay = document.getElementById('loading-overlay');
+    const loadingIndicator = document.getElementById('loading-indicator');
     if (loadingOverlay) {
         setTimeout(() => {
             loadingOverlay.style.opacity = '0';
             setTimeout(() => {
                 loadingOverlay.style.display = 'none';
+            }, 300);
+        }, 500);
+    }
+
+    // Hide initial loading indicator from start partial (if present)
+    if (loadingIndicator) {
+        setTimeout(() => {
+            loadingIndicator.style.opacity = '0';
+            setTimeout(() => {
+                loadingIndicator.style.display = 'none';
             }, 300);
         }, 500);
     }

@@ -66,7 +66,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="{{ route('frontend.apbdes.index') }}" class="footer-link">
+                            <a href="{{ route('apbdes.index') }}" class="footer-link">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" />
                                 </svg>
@@ -74,7 +74,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="{{ route('frontend.berita.index') }}" class="footer-link">
+                            <a href="{{ route('berita.index') }}" class="footer-link">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
                                 </svg>
@@ -82,7 +82,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="{{ route('frontend.produk-umkm.index') }}" class="footer-link">
+                            <a href="{{ route('umkm.index') }}" class="footer-link">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
                                 </svg>

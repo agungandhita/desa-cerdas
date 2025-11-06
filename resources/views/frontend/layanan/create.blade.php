@@ -1,63 +1,28 @@
 @extends('frontend.layouts.main')
 
-@section('breadcrumb')
-<div class="bg-gray-100 py-8">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <nav class="flex" aria-label="Breadcrumb">
-            <ol class="flex items-center space-x-4">
-                <li>
-                    <div>
-                        <a href="{{ route('beranda') }}" class="text-gray-400 hover:text-gray-500">
-                            <svg class="flex-shrink-0 h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
-                                <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path>
-                            </svg>
-                            <span class="sr-only">Beranda</span>
-                        </a>
-                    </div>
-                </li>
-                <li>
-                    <div class="flex items-center">
-                        <svg class="flex-shrink-0 h-5 w-5 text-gray-300" fill="currentColor" viewBox="0 0 20 20">
-                            <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
-                        </svg>
-                        <a href="{{ route('layanan.index') }}" class="ml-4 text-sm font-medium text-gray-500 hover:text-gray-700">Layanan Publik</a>
-                    </div>
-                </li>
-                <li>
-                    <div class="flex items-center">
-                        <svg class="flex-shrink-0 h-5 w-5 text-gray-300" fill="currentColor" viewBox="0 0 20 20">
-                            <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
-                        </svg>
-                        <span class="ml-4 text-sm font-medium text-gray-500">Ajukan Permohonan</span>
-                    </div>
-                </li>
-            </ol>
-        </nav>
-        <div class="mt-4">
-            <h1 class="text-3xl font-bold text-gray-900">Ajukan Permohonan Surat</h1>
-            <p class="mt-2 text-gray-600">Isi formulir di bawah ini untuk mengajukan permohonan surat</p>
-        </div>
-    </div>
-</div>
-@endsection
-
 @section('container')
-<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-    <div class="grid lg:grid-cols-3 gap-8">
-        <!-- Main Form -->
-        <div class="lg:col-span-2">
-            <div class="bg-white rounded-lg shadow-md p-6">
-                <form action="{{ route('layanan.store') }}" method="POST" enctype="multipart/form-data" class="space-y-6">
-                    @csrf
-                    
-                    <!-- Service Type -->
+<div class="bg-gray-50">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div class="text-center mb-10">
+            <h1 class="text-4xl font-extrabold text-gray-900">Formulir Permohonan Surat</h1>
+            <p class="mt-3 text-lg text-gray-600">Lengkapi data berikut untuk mengajukan permohonan surat Anda.</p>
+        </div>
+
+        <div class="bg-white rounded-2xl shadow-xl p-8">
+            <form action="{{ route('layanan.store') }}" method="POST" enctype="multipart/form-data" class="space-y-8">
+                @csrf
+
+                <!-- Step 1: Service Selection -->
+                <div class="p-6 border border-gray-200 rounded-lg">
+                    <div class="flex items-center mb-4">
+                        <div class="flex-shrink-0 w-10 h-10 bg-blue-600 text-white rounded-full flex items-center justify-center font-bold text-lg">1</div>
+                        <h2 class="ml-4 text-2xl font-bold text-gray-800">Pilih Jenis Layanan</h2>
+                    </div>
                     <div>
-                        <label for="jenis_surat" class="block text-sm font-medium text-gray-700 mb-2">
-                            Jenis Surat <span class="text-red-500">*</span>
-                        </label>
+                        <label for="jenis_surat" class="sr-only">Jenis Surat</label>
                         <select name="jenis_surat" id="jenis_surat" required
-                                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 @error('jenis_surat') border-red-500 @enderror">
-                            <option value="">Pilih Jenis Surat</option>
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg text-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-shadow @error('jenis_surat') border-red-500 @enderror">
+                            <option value="">-- Pilih Jenis Surat --</option>
                             @foreach($jenisLayanan as $key => $nama)
                             <option value="{{ $key }}" {{ (old('jenis_surat', $jenis) == $key) ? 'selected' : '' }}>
                                 {{ $nama }}
@@ -65,215 +30,173 @@
                             @endforeach
                         </select>
                         @error('jenis_surat')
-                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                        <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
                         @enderror
                     </div>
+                </div>
 
-                    <!-- Purpose -->
-                    <div>
-                        <label for="keperluan" class="block text-sm font-medium text-gray-700 mb-2">
-                            Keperluan <span class="text-red-500">*</span>
-                        </label>
-                        <textarea name="keperluan" id="keperluan" rows="4" required
-                                  class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 @error('keperluan') border-red-500 @enderror"
-                                  placeholder="Jelaskan keperluan surat yang Anda ajukan...">{{ old('keperluan') }}</textarea>
-                        @error('keperluan')
-                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                        @enderror
-                        <p class="mt-1 text-sm text-gray-500">Maksimal 500 karakter</p>
+                <!-- Step 2: Details -->
+                <div class="p-6 border border-gray-200 rounded-lg">
+                    <div class="flex items-center mb-4">
+                        <div class="flex-shrink-0 w-10 h-10 bg-blue-600 text-white rounded-full flex items-center justify-center font-bold text-lg">2</div>
+                        <h2 class="ml-4 text-2xl font-bold text-gray-800">Detail Keperluan</h2>
                     </div>
-
-                    <!-- Additional Information -->
-                    <div>
-                        <label for="keterangan_tambahan" class="block text-sm font-medium text-gray-700 mb-2">
-                            Keterangan Tambahan
-                        </label>
-                        <textarea name="keterangan_tambahan" id="keterangan_tambahan" rows="3"
-                                  class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 @error('keterangan_tambahan') border-red-500 @enderror"
-                                  placeholder="Informasi tambahan yang perlu diketahui (opsional)...">{{ old('keterangan_tambahan') }}</textarea>
-                        @error('keterangan_tambahan')
-                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                        @enderror
-                        <p class="mt-1 text-sm text-gray-500">Maksimal 1000 karakter</p>
+                    <div class="space-y-6">
+                        <div>
+                            <label for="keperluan" class="block text-sm font-medium text-gray-700 mb-1">Keperluan</label>
+                            <textarea name="keperluan" id="keperluan" rows="4" required
+                                      class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 @error('keperluan') border-red-500 @enderror"
+                                      placeholder="Contoh: Untuk melamar pekerjaan di PT. Sejahtera Abadi">{{ old('keperluan') }}</textarea>
+                            @error('keperluan')
+                            <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                            @enderror
+                        </div>
+                        <div>
+                            <label for="keterangan_tambahan" class="block text-sm font-medium text-gray-700 mb-1">Keterangan Tambahan (Opsional)</label>
+                            <textarea name="keterangan_tambahan" id="keterangan_tambahan" rows="3"
+                                      class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 @error('keterangan_tambahan') border-red-500 @enderror"
+                                      placeholder="Informasi lain yang relevan...">{{ old('keterangan_tambahan') }}</textarea>
+                            @error('keterangan_tambahan')
+                            <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                            @enderror
+                        </div>
                     </div>
+                </div>
 
-                    <!-- Supporting Documents -->
+                <!-- Step 3: Document Upload -->
+                <div class="p-6 border border-gray-200 rounded-lg">
+                    <div class="flex items-center mb-4">
+                        <div class="flex-shrink-0 w-10 h-10 bg-blue-600 text-white rounded-full flex items-center justify-center font-bold text-lg">3</div>
+                        <h2 class="ml-4 text-2xl font-bold text-gray-800">Unggah Dokumen</h2>
+                    </div>
                     <div>
-                        <label for="dokumen_pendukung" class="block text-sm font-medium text-gray-700 mb-2">
-                            Dokumen Pendukung
-                        </label>
-                        <div class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-lg hover:border-gray-400 transition-colors">
+                        <label for="dokumen_pendukung" class="block text-sm font-medium text-gray-700 mb-2">Dokumen Pendukung (jika ada)</label>
+                        <div id="file-upload-area" class="relative mt-1 flex justify-center px-6 pt-10 pb-10 border-2 border-gray-300 border-dashed rounded-lg hover:border-blue-500 transition-colors cursor-pointer">
                             <div class="space-y-1 text-center">
                                 <svg class="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48">
                                     <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                                 </svg>
                                 <div class="flex text-sm text-gray-600">
-                                    <label for="dokumen_pendukung" class="relative cursor-pointer bg-white rounded-md font-medium text-blue-600 hover:text-blue-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-blue-500">
-                                        <span>Upload file</span>
+                                    <label for="dokumen_pendukung" class="relative font-medium text-blue-600 hover:text-blue-500">
+                                        <span>Pilih file untuk diunggah</span>
                                         <input id="dokumen_pendukung" name="dokumen_pendukung" type="file" class="sr-only" accept=".pdf,.jpg,.jpeg,.png">
                                     </label>
-                                    <p class="pl-1">atau drag and drop</p>
+                                    <p class="pl-1">atau seret dan lepas</p>
                                 </div>
-                                <p class="text-xs text-gray-500">PDF, JPG, JPEG, PNG hingga 2MB</p>
+                                <p class="text-xs text-gray-500">PDF, JPG, PNG (maks. 2MB)</p>
                             </div>
                         </div>
+                        <div id="file-preview" class="mt-4 hidden"></div>
                         @error('dokumen_pendukung')
-                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                        <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
                         @enderror
                     </div>
+                </div>
 
-                    <!-- Terms and Conditions -->
-                    <div class="bg-gray-50 rounded-lg p-4">
+                <!-- Step 4: Confirmation -->
+                <div class="p-6 border border-gray-200 rounded-lg">
+                    <div class="flex items-center mb-4">
+                        <div class="flex-shrink-0 w-10 h-10 bg-blue-600 text-white rounded-full flex items-center justify-center font-bold text-lg">4</div>
+                        <h2 class="ml-4 text-2xl font-bold text-gray-800">Konfirmasi & Kirim</h2>
+                    </div>
+                    <div class="bg-blue-50 rounded-lg p-4">
                         <div class="flex items-start">
                             <div class="flex items-center h-5">
                                 <input id="terms" name="terms" type="checkbox" required
-                                       class="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300 rounded">
+                                       class="focus:ring-blue-500 h-5 w-5 text-blue-600 border-gray-300 rounded">
                             </div>
                             <div class="ml-3 text-sm">
-                                <label for="terms" class="font-medium text-gray-700">
-                                    Saya menyetujui syarat dan ketentuan
+                                <label for="terms" class="font-medium text-gray-800">
+                                    Saya menyatakan data yang diisi adalah benar.
                                 </label>
-                                <p class="text-gray-500">
-                                    Dengan mencentang kotak ini, saya menyatakan bahwa data yang saya berikan adalah benar dan dapat dipertanggungjawabkan.
+                                <p class="text-gray-600 mt-1">
+                                    Dengan ini, saya bertanggung jawab penuh atas kebenaran data dan dokumen yang saya lampirkan.
                                 </p>
                             </div>
                         </div>
                     </div>
+                </div>
 
-                    <!-- Submit Buttons -->
-                    <div class="flex space-x-4">
-                        <button type="submit" 
-                                class="flex-1 inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors">
-                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path>
-                            </svg>
-                            Ajukan Permohonan
-                        </button>
-                        
+                <!-- Submission -->
+                <div class="pt-5">
+                    <div class="flex justify-end space-x-4">
                         <a href="{{ route('layanan.index') }}" 
-                           class="inline-flex items-center justify-center px-6 py-3 border border-gray-300 text-base font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors">
+                           class="px-8 py-3 border border-gray-300 text-base font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 transition-shadow">
                             Batal
                         </a>
-                    </div>
-                </form>
-            </div>
-        </div>
-
-        <!-- Sidebar -->
-        <div class="lg:col-span-1">
-            <!-- User Info -->
-            @auth
-            <div class="bg-white rounded-lg shadow-md p-6 mb-6">
-                <h3 class="text-lg font-semibold text-gray-900 mb-4">Data Pemohon</h3>
-                <div class="space-y-3">
-                    <div>
-                        <dt class="text-sm font-medium text-gray-500">Nama</dt>
-                        <dd class="mt-1 text-sm text-gray-900">{{ Auth::user()->name }}</dd>
-                    </div>
-                    <div>
-                        <dt class="text-sm font-medium text-gray-500">Email</dt>
-                        <dd class="mt-1 text-sm text-gray-900">{{ Auth::user()->email }}</dd>
-                    </div>
-                    @if(Auth::user()->phone)
-                    <div>
-                        <dt class="text-sm font-medium text-gray-500">Telepon</dt>
-                        <dd class="mt-1 text-sm text-gray-900">{{ Auth::user()->phone }}</dd>
-                    </div>
-                    @endif
-                </div>
-                <div class="mt-4">
-                    <a href="{{ route('profile.edit') }}" class="text-sm text-blue-600 hover:text-blue-800">
-                        Edit profil →
-                    </a>
-                </div>
-            </div>
-            @endauth
-
-            <!-- Important Notes -->
-            <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-6 mb-6">
-                <div class="flex items-start">
-                    <div class="flex-shrink-0">
-                        <svg class="h-5 w-5 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z"></path>
-                        </svg>
-                    </div>
-                    <div class="ml-3">
-                        <h3 class="text-sm font-medium text-yellow-900">Catatan Penting</h3>
-                        <div class="mt-2 text-sm text-yellow-700">
-                            <ul class="list-disc list-inside space-y-1">
-                                <li>Pastikan data yang diisi benar dan lengkap</li>
-                                <li>Upload dokumen dengan kualitas yang jelas</li>
-                                <li>Permohonan akan diproses dalam 3-5 hari kerja</li>
-                                <li>Anda akan mendapat notifikasi status permohonan</li>
-                            </ul>
-                        </div>
+                        <button type="submit" 
+                                class="px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 shadow-lg shadow-blue-500/50 hover:shadow-xl transition-all">
+                            Kirim Permohonan
+                        </button>
                     </div>
                 </div>
-            </div>
-
-            <!-- Quick Links -->
-            <div class="bg-white rounded-lg shadow-md p-6">
-                <h3 class="text-lg font-semibold text-gray-900 mb-4">Tautan Cepat</h3>
-                <div class="space-y-3">
-                    <a href="{{ route('layanan.index') }}" 
-                       class="block text-sm text-gray-600 hover:text-blue-600 transition-colors">
-                        <svg class="w-4 h-4 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
-                        </svg>
-                        Kembali ke Layanan
-                    </a>
-                    
-                    @auth
-                    <a href="{{ route('layanan.riwayat') }}" 
-                       class="block text-sm text-gray-600 hover:text-blue-600 transition-colors">
-                        <svg class="w-4 h-4 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
-                        </svg>
-                        Riwayat Permohonan
-                    </a>
-                    @endauth
-                    
-                    <a href="{{ route('kontak') }}" 
-                       class="block text-sm text-gray-600 hover:text-blue-600 transition-colors">
-                        <svg class="w-4 h-4 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                        </svg>
-                        Bantuan & Kontak
-                    </a>
-                </div>
-            </div>
+            </form>
         </div>
     </div>
 </div>
 
 <script>
-// File upload preview
-document.getElementById('dokumen_pendukung').addEventListener('change', function(e) {
-    const file = e.target.files[0];
-    if (file) {
+document.addEventListener('DOMContentLoaded', function() {
+    const fileUploadArea = document.getElementById('file-upload-area');
+    const fileInput = document.getElementById('dokumen_pendukung');
+    const filePreview = document.getElementById('file-preview');
+
+    fileUploadArea.addEventListener('click', () => fileInput.click());
+
+    fileUploadArea.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        fileUploadArea.classList.add('border-blue-500');
+    });
+
+    fileUploadArea.addEventListener('dragleave', () => {
+        fileUploadArea.classList.remove('border-blue-500');
+    });
+
+    fileUploadArea.addEventListener('drop', (e) => {
+        e.preventDefault();
+        fileUploadArea.classList.remove('border-blue-500');
+        if (e.dataTransfer.files.length > 0) {
+            fileInput.files = e.dataTransfer.files;
+            handleFiles(fileInput.files);
+        }
+    });
+
+    fileInput.addEventListener('change', () => {
+        handleFiles(fileInput.files);
+    });
+
+    function handleFiles(files) {
+        if (files.length === 0) {
+            filePreview.innerHTML = '';
+            filePreview.classList.add('hidden');
+            return;
+        }
+
+        const file = files[0];
         const fileName = file.name;
         const fileSize = (file.size / 1024 / 1024).toFixed(2);
-        
-        // Create preview element
-        const preview = document.createElement('div');
-        preview.className = 'mt-2 text-sm text-gray-600';
-        preview.innerHTML = `
-            <div class="flex items-center">
-                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
-                </svg>
-                <span>${fileName} (${fileSize} MB)</span>
+
+        filePreview.innerHTML = `
+            <div class="flex items-center justify-between p-3 bg-gray-100 rounded-lg border border-gray-200">
+                <div class="flex items-center">
+                    <svg class="w-6 h-6 text-green-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    <div>
+                        <p class="text-sm font-medium text-gray-800">${fileName}</p>
+                        <p class="text-xs text-gray-500">${fileSize} MB</p>
+                    </div>
+                </div>
+                <button type="button" id="remove-file" class="text-red-500 hover:text-red-700">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                </button>
             </div>
         `;
-        
-        // Remove existing preview
-        const existingPreview = e.target.parentNode.parentNode.parentNode.querySelector('.mt-2');
-        if (existingPreview) {
-            existingPreview.remove();
-        }
-        
-        // Add new preview
-        e.target.parentNode.parentNode.parentNode.appendChild(preview);
+        filePreview.classList.remove('hidden');
+
+        document.getElementById('remove-file').addEventListener('click', () => {
+            fileInput.value = ''; // Clear the file input
+            filePreview.innerHTML = '';
+            filePreview.classList.add('hidden');
+        });
     }
 });
 </script>
