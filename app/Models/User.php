@@ -82,6 +82,14 @@ class User extends Authenticatable
     }
 
     /**
+     * Alias: relasi dengan forum (dipakai oleh view sebagai 'forums')
+     */
+    public function forums()
+    {
+        return $this->hasMany(Forum::class);
+    }
+
+    /**
      * Relasi dengan komentar forum
      */
     public function komentarForum()

@@ -2,7 +2,7 @@
 
 @section('hero')
     <!-- Hero Section -->
-    <div class="relative h-[50vh] md:h-[60vh] bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1495567720989-c31c240e4d7c?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');">
+    <div class="relative h-[50vh] md:h-[60vh] bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1502082553048-f009c37129b9?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');">
         <div class="absolute inset-0 bg-black/50"></div>
         <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex flex-col justify-center items-center text-center text-white">
             <h1 class="text-4xl md:text-6xl font-bold mb-4 animate-fade-in-down">

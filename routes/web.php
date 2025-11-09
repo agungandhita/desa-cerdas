@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\ChatRoomController;
 use App\Http\Controllers\Admin\ProdukUmkmController;
 use App\Http\Controllers\Admin\LokasiDesaController;
 use App\Http\Controllers\Admin\ApbdesController;
+use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\BeritaController as FrontendBeritaController;
 use App\Http\Controllers\Frontend\ProdukUmkmController as FrontendProdukUmkmController;
@@ -95,6 +96,9 @@ Route::get('/dashboard', function () {
 
 // Admin Permohonan Surat Routes
 Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(function () {
+    // Users Management Routes
+    Route::resource('users', UserController::class);
+
     Route::resource('permohonan-surat', PermohonanSuratController::class);
     Route::patch('permohonan-surat/{permohonanSurat}/status', [PermohonanSuratController::class, 'updateStatus'])
         ->name('permohonan-surat.update-status');

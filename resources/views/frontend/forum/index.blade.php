@@ -1,8 +1,8 @@
-@extends('layouts.frontend')
+@extends('frontend.layouts.main')
 
 @section('title', 'Forum Diskusi')
 
-@section('content')
+@section('container')
 <div class="min-h-screen bg-gray-50 py-8">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <!-- Breadcrumb -->
@@ -33,13 +33,13 @@
                 <!-- Search & Filter -->
                 <div class="bg-white rounded-lg shadow-md p-6 mb-6">
                     <h3 class="text-lg font-semibold text-gray-900 mb-4">Cari Diskusi</h3>
-                    
+
                     <form method="GET" action="{{ route('forum.index') }}" class="space-y-4">
                         <!-- Search -->
                         <div>
                             <label for="search" class="block text-sm font-medium text-gray-700 mb-2">Kata Kunci</label>
-                            <input type="text" name="search" id="search" value="{{ request('search') }}" 
-                                   placeholder="Cari judul, isi, atau penulis..." 
+                            <input type="text" name="search" id="search" value="{{ request('search') }}"
+                                   placeholder="Cari judul, isi, atau penulis..."
                                    class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
                         </div>
 
@@ -175,15 +175,15 @@
                                             @endif
                                             <span class="text-sm text-gray-500">{{ $forum->created_at->diffForHumans() }}</span>
                                         </div>
-                                        
+
                                         <h2 class="text-xl font-semibold text-gray-900 mb-2">
                                             <a href="{{ route('forum.show', $forum->id) }}" class="hover:text-blue-600 transition duration-300">
                                                 {{ $forum->judul }}
                                             </a>
                                         </h2>
-                                        
+
                                         <p class="text-gray-600 mb-4 line-clamp-3">{{ Str::limit(strip_tags($forum->isi), 200) }}</p>
-                                        
+
                                         <div class="flex items-center justify-between">
                                             <div class="flex items-center space-x-4">
                                                 <div class="flex items-center text-sm text-gray-500">
@@ -208,7 +208,7 @@
                                                     </div>
                                                 @endif
                                             </div>
-                                            
+
                                             <a href="{{ route('forum.show', $forum->id) }}" class="inline-flex items-center px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-md hover:bg-blue-700 transition duration-300">
                                                 Baca Selengkapnya
                                                 <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">

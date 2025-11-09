@@ -1,8 +1,8 @@
-@extends('layouts.frontend')
+@extends('frontend.layouts.main')
 
 @section('title', $forum->judul)
 
-@section('content')
+@section('container')
 <div class="min-h-screen bg-gray-50 py-8">
     <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <!-- Breadcrumb -->
@@ -76,7 +76,7 @@
                             @auth
                                 @if(auth()->id() === $forum->user_id)
                                     <div class="flex space-x-2">
-                                        <a href="{{ route('forum.edit', $forum) }}" 
+                                        <a href="{{ route('forum.edit', $forum) }}"
                                            class="inline-flex items-center px-3 py-2 border border-gray-300 shadow-sm text-sm leading-4 font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
                                             <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
@@ -86,7 +86,7 @@
                                         <form action="{{ route('forum.destroy', $forum) }}" method="POST" class="inline" onsubmit="return confirm('Apakah Anda yakin ingin menghapus diskusi ini?')">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" 
+                                            <button type="submit"
                                                     class="inline-flex items-center px-3 py-2 border border-red-300 shadow-sm text-sm leading-4 font-medium rounded-md text-red-700 bg-white hover:bg-red-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
                                                 <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
@@ -126,8 +126,8 @@
                                         {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
                                     </div>
                                     <div class="flex-1">
-                                        <textarea name="isi" 
-                                                  rows="3" 
+                                        <textarea name="isi"
+                                                  rows="3"
                                                   placeholder="Tulis komentar Anda..."
                                                   class="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent @error('isi') border-red-500 @enderror"
                                                   required>{{ old('isi') }}</textarea>
@@ -136,7 +136,7 @@
                                         @enderror
                                         <div class="mt-3 flex justify-between items-center">
                                             <p class="text-sm text-gray-500">Gunakan bahasa yang sopan dan konstruktif</p>
-                                            <button type="submit" 
+                                            <button type="submit"
                                                     class="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition duration-300">
                                                 Kirim Komentar
                                             </button>
@@ -149,7 +149,7 @@
                         <div class="p-6 border-b border-gray-200 bg-gray-50">
                             <div class="text-center">
                                 <p class="text-gray-600 mb-4">Silakan login untuk memberikan komentar</p>
-                                <a href="{{ route('login') }}" 
+                                <a href="{{ route('login') }}"
                                    class="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition duration-300">
                                     <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"></path>
@@ -219,11 +219,11 @@
                 </div>
 
                 <!-- Related Discussions -->
-                @if($relatedDiscussions->count() > 0)
+                @if($relatedForums->count() > 0)
                     <div class="bg-white rounded-lg shadow-md p-6 mb-6">
                         <h3 class="text-lg font-semibold text-gray-900 mb-4">Diskusi Terkait</h3>
                         <div class="space-y-4">
-                            @foreach($relatedDiscussions as $related)
+                            @foreach($relatedForums as $related)
                                 <div class="border-l-4 border-blue-500 pl-4">
                                     <a href="{{ route('forum.show', $related) }}" class="block hover:bg-gray-50 -ml-4 pl-4 py-2 rounded-r">
                                         <h4 class="font-medium text-gray-900 text-sm mb-1 line-clamp-2">{{ $related->judul }}</h4>

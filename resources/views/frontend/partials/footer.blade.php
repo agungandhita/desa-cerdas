@@ -1,15 +1,13 @@
 {{-- Footer Section --}}
 <footer class="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white relative overflow-hidden">
     {{-- Background Pattern --}}
-    <div class="absolute inset-0 opacity-5">
-        <div class="absolute inset-0" style="background-image: url('data:image/svg+xml,<svg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><g fill="%23ffffff" fill-opacity="0.1"><circle cx="7" cy="7" r="1"/><circle cx="27" cy="7" r="1"/><circle cx="47" cy="7" r="1"/><circle cx="7" cy="27" r="1"/><circle cx="27" cy="27" r="1"/><circle cx="47" cy="27" r="1"/><circle cx="7" cy="47" r="1"/><circle cx="27" cy="47" r="1"/><circle cx="47" cy="47" r="1"/></g></g></svg>')"></div>
-    </div>
+    <div aria-hidden="true" class="absolute inset-0 opacity-5 pointer-events-none bg-grid-pattern"></div>
 
     <div class="relative z-10">
         {{-- Main Footer Content --}}
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
-                
+
                 {{-- Brand & Description --}}
                 <div class="lg:col-span-2 space-y-6">
                     <div class="flex items-center space-x-4">
@@ -23,11 +21,11 @@
                             <p class="text-blue-300 text-sm font-medium">Sistem Informasi Desa Terpadu</p>
                         </div>
                     </div>
-                    
+
                     <p class="text-gray-300 text-sm leading-relaxed max-w-md">
                         Platform digital yang menghubungkan warga dengan pemerintah desa untuk pelayanan yang lebih efisien, transparan, dan mudah diakses. Membangun desa yang cerdas dan modern melalui teknologi informasi.
                     </p>
-                    
+
                     {{-- Social Media Links --}}
                     <div class="flex space-x-4">
                         <a href="#" class="social-link" aria-label="Facebook">
@@ -173,7 +171,7 @@
                             <a href="#" class="text-gray-400 hover:text-blue-300 transition-colors">Syarat & Ketentuan</a>
                         </div>
                     </div>
-                    
+
                     <div class="flex items-center space-x-2">
                         <p class="text-gray-400 text-sm">Melayani dengan</p>
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-red-500" viewBox="0 0 20 20" fill="currentColor">
@@ -189,15 +187,22 @@
 
 {{-- Footer Styles --}}
 <style>
+/* Pola grid halus sebagai latar footer */
+.bg-grid-pattern {
+    background-image: url("data:image/svg+xml,<svg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'><g fill='none' fill-rule='evenodd'><g fill='%23ffffff' fill-opacity='0.1'><circle cx='7' cy='7' r='1'/><circle cx='27' cy='7' r='1'/><circle cx='47' cy='7' r='1'/><circle cx='7' cy='27' r='1'/><circle cx='27' cy='27' r='1'/><circle cx='47' cy='27' r='1'/><circle cx='7' cy='47' r='1'/><circle cx='27' cy='47' r='1'/><circle cx='47' cy='47' r='1'/></g></g></svg>");
+    background-size: 60px 60px;
+    background-position: center;
+}
+
 .social-link {
-    @apply w-10 h-10 bg-gray-700/50 hover:bg-blue-600 rounded-lg flex items-center justify-center text-gray-300 hover:text-white transition-all duration-300 hover:scale-110 hover:shadow-lg;
+    @apply w-10 h-10 rounded-lg flex items-center justify-center bg-gray-700/50 text-gray-300 transition-all duration-300 hover:bg-blue-600 hover:text-white hover:scale-110 hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 focus-visible:ring-offset-2 focus-visible:ring-offset-gray-800;
 }
 
 .footer-link {
-    @apply flex items-center space-x-2 text-gray-300 hover:text-blue-300 transition-colors duration-200 text-sm group;
+    @apply group flex items-center space-x-2 text-gray-300 text-sm transition-colors duration-200 hover:text-blue-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 rounded;
 }
 
 .footer-link svg {
-    @apply text-gray-400 group-hover:text-blue-400 transition-colors duration-200;
+    @apply text-gray-400 transition-colors duration-200 group-hover:text-blue-400;
 }
 </style>

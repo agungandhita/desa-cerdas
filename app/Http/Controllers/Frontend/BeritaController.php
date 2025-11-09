@@ -60,7 +60,12 @@ class BeritaController extends Controller
             ->take(5)
             ->get();
 
-        return view('frontend.berita.index', compact('berita', 'featuredBerita', 'recentBerita'));
+        // Categories and tags are not implemented in the current schema.
+        // Pass empty collections to avoid undefined variable errors in the view.
+        $categories = collect();
+        $tags = collect();
+
+        return view('frontend.berita.index', compact('berita', 'featuredBerita', 'recentBerita', 'categories', 'tags'));
     }
 
     /**
@@ -101,7 +106,8 @@ class BeritaController extends Controller
 
         if ($category) {
             // Assuming you have a category field or relationship
-            $query->where('kategori', $category);
+            // NOTE: No kategori field exists currently; this is a placeholder.
+            // $query->where('kategori', $category);
         }
 
         $berita = $query->orderBy('is_featured', 'desc')

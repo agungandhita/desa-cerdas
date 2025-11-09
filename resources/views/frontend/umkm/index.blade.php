@@ -1,46 +1,28 @@
 @extends('frontend.layouts.main')
 
-@section('breadcrumb')
-<div class="bg-gray-100 py-8">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <nav class="flex" aria-label="Breadcrumb">
-            <ol class="flex items-center space-x-4">
-                <li>
-                    <div>
-                        <a href="{{ route('beranda') }}" class="text-gray-400 hover:text-gray-500">
-                            <svg class="flex-shrink-0 h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
-                                <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path>
-                            </svg>
-                            <span class="sr-only">Beranda</span>
-                        </a>
-                    </div>
-                </li>
-                <li>
-                    <div class="flex items-center">
-                        <svg class="flex-shrink-0 h-5 w-5 text-gray-300" fill="currentColor" viewBox="0 0 20 20">
-                            <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
-                        </svg>
-                        <span class="ml-4 text-sm font-medium text-gray-500">UMKM</span>
-                    </div>
-                </li>
-            </ol>
-        </nav>
-        <div class="mt-4">
-            <h1 class="text-3xl font-bold text-gray-900">Produk UMKM Desa</h1>
-            <p class="mt-2 text-gray-600">Temukan berbagai produk unggulan dari UMKM lokal desa</p>
+@section('hero')
+    <section class="relative h-[300px] sm:h-[350px] md:h-[400px] lg:h-[450px] xl:h-[500px] flex items-center justify-center text-center text-white" style="background-image: url('https://images.unsplash.com/photo-1500382017468-9049fed747ef?q=80&w=2232&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'); background-size: cover; background-position: center;">
+        <div class="absolute inset-0 bg-black opacity-50"></div>
+        <div class="relative z-10 p-4">
+            <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight leading-tight mb-2">
+                Produk UMKM Desa
+            </h1>
+            <p class="text-base sm:text-lg md:text-xl lg:text-2xl font-light max-w-3xl mx-auto">
+                Temukan berbagai produk unggulan dari UMKM lokal desa.
+            </p>
         </div>
-    </div>
-</div>
+    </section>
 @endsection
 
 @section('container')
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-    <div class="grid lg:grid-cols-4 gap-8">
+<section class="py-16 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid lg:grid-cols-4 gap-12 items-start">
         <!-- Sidebar Filters -->
-        <div class="lg:col-span-1">
+        <aside class="lg:col-span-1">
             <!-- Search and Filter Form -->
-            <div class="bg-white rounded-lg shadow-md p-6 mb-6">
-                <h3 class="text-lg font-bold text-gray-900 mb-4">Filter Produk</h3>
+            <div class="bg-white rounded-lg shadow-md p-8 mb-8">
+                <h3 class="text-xl font-bold text-gray-900 mb-5">Filter Produk</h3>
                 <form method="GET" action="{{ route('umkm.index') }}" class="space-y-4">
                     <!-- Search -->
                     <div>
@@ -97,7 +79,7 @@
 
             <!-- Featured Products -->
             @if($featuredProduk->count() > 0)
-            <div class="bg-white rounded-lg shadow-md p-6">
+            <div class="bg-white rounded-lg shadow-md p-8">
                 <h3 class="text-lg font-bold text-gray-900 mb-4">Produk Unggulan</h3>
                 <div class="space-y-4">
                     @foreach($featuredProduk as $featured)
@@ -126,10 +108,10 @@
                 </div>
             </div>
             @endif
-        </div>
+        </aside>
 
         <!-- Main Content -->
-        <div class="lg:col-span-3">
+        <section class="lg:col-span-3">
             <!-- Sort and Results Info -->
             <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6">
                 <div class="mb-4 sm:mb-0">
@@ -157,7 +139,7 @@
 
             <!-- Products Grid -->
             @if($produkUmkm->count() > 0)
-            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
                 @foreach($produkUmkm as $produk)
                 <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow group">
                     <div class="relative">
@@ -251,7 +233,8 @@
                 </a>
             </div>
             @endif
-        </div>
+        </section>
     </div>
-</div>
+    </div>
+</section>
 @endsection

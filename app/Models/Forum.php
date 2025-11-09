@@ -52,6 +52,14 @@ class Forum extends Model
     }
 
     /**
+     * Alias: Relasi dengan KomentarForum (dipakai oleh controller/view sebagai 'komentars')
+     */
+    public function komentars()
+    {
+        return $this->hasMany(KomentarForum::class);
+    }
+
+    /**
      * Relasi dengan komentar aktif saja
      */
     public function komentarAktif()

@@ -1,19 +1,17 @@
 @extends('frontend.layouts.main')
 
 @section('container')
-<!-- Hero Section -->
-<div class="relative bg-gradient-to-r from-blue-500 to-blue-700 text-white py-20 px-4 sm:px-6 lg:px-8">
-    <div class="absolute inset-0">
-        <img class="w-full h-full object-cover" src="https://images.unsplash.com/photo-1519791883288-dc8bd696e667?q=80&w=1935&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Layanan Publik">
-        <div class="absolute inset-0 bg-black opacity-50"></div>
+<!-- Hero Section (match theme from Tentang page) -->
+<section class="relative h-[300px] sm:h-[350px] md:h-[400px] lg:h-[450px] xl:h-[500px] flex items-center justify-center text-center text-white" style="background-image: url('https://images.unsplash.com/photo-1519791883288-dc8bd696e667?q=80&w=1935&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'); background-size: cover; background-position: center;">
+    <div class="absolute inset-0 bg-black opacity-50"></div>
+    <div class="relative z-10 p-4">
+        <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight leading-tight mb-2">Layanan Publik Desa</h1>
+        <p class="text-base sm:text-lg md:text-xl lg:text-2xl font-light max-w-3xl mx-auto">Akses berbagai layanan administrasi desa dengan mudah dan cepat secara online.</p>
     </div>
-    <div class="relative max-w-7xl mx-auto text-center">
-        <h1 class="text-4xl font-extrabold tracking-tight sm:text-5xl lg:text-6xl">Layanan Publik Desa</h1>
-        <p class="mt-4 max-w-2xl mx-auto text-xl">Akses berbagai layanan administrasi desa dengan mudah dan cepat secara online.</p>
-    </div>
-</div>
+    
+</section>
 
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
     <!-- Service Information -->
     <div class="bg-blue-50 border-l-4 border-blue-400 text-blue-700 p-4 mb-8" role="alert">
         <div class="flex">

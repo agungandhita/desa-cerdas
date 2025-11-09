@@ -151,7 +151,7 @@
                 
                 <div class="space-y-3">
                     <!-- Toggle Featured -->
-                    <form action="{{ route('admin.produk-umkm.toggle-featured', $produk) }}" method="POST" class="inline">
+                    <form action="{{ route('admin.produk-umkm.toggleFeatured', $produk) }}" method="POST" class="inline">
                         @csrf
                         @method('PATCH')
                         <button type="submit" class="w-full px-4 py-2 {{ $produk->is_featured ? 'bg-yellow-100 text-yellow-800 hover:bg-yellow-200' : 'bg-slate-100 text-slate-700 hover:bg-slate-200' }} rounded-lg transition-colors duration-200">
@@ -162,7 +162,7 @@
 
                     <!-- Change Status -->
                     @if($produk->status == 'pending')
-                    <form action="{{ route('admin.produk-umkm.update-status', $produk) }}" method="POST" class="inline">
+                    <form action="{{ route('admin.produk-umkm.updateStatus', $produk) }}" method="POST" class="inline">
                         @csrf
                         @method('PATCH')
                         <input type="hidden" name="status" value="active">
@@ -171,7 +171,7 @@
                         </button>
                     </form>
                     @elseif($produk->status == 'active')
-                    <form action="{{ route('admin.produk-umkm.update-status', $produk) }}" method="POST" class="inline">
+                    <form action="{{ route('admin.produk-umkm.updateStatus', $produk) }}" method="POST" class="inline">
                         @csrf
                         @method('PATCH')
                         <input type="hidden" name="status" value="inactive">
@@ -180,7 +180,7 @@
                         </button>
                     </form>
                     @else
-                    <form action="{{ route('admin.produk-umkm.update-status', $produk) }}" method="POST" class="inline">
+                    <form action="{{ route('admin.produk-umkm.updateStatus', $produk) }}" method="POST" class="inline">
                         @csrf
                         @method('PATCH')
                         <input type="hidden" name="status" value="active">

@@ -116,7 +116,8 @@ class ProdukUmkmController extends Controller
     public function show(ProdukUmkm $produkUmkm)
     {
         $produkUmkm->load('user');
-        return view('admin.produk-umkm.show', compact('produkUmkm'));
+        $produk = $produkUmkm;
+        return view('admin.produk-umkm.show', compact('produk'));
     }
 
     /**
@@ -125,7 +126,8 @@ class ProdukUmkmController extends Controller
     public function edit(ProdukUmkm $produkUmkm)
     {
         $users = User::orderBy('name')->get();
-        return view('admin.produk-umkm.edit', compact('produkUmkm', 'users'));
+        $produk = $produkUmkm;
+        return view('admin.produk-umkm.edit', compact('produk', 'users'));
     }
 
     /**

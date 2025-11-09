@@ -92,6 +92,17 @@
                                 <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                             @enderror
                         </div>
+                        <div class="md:col-span-2">
+                            <div class="flex items-center gap-3">
+                                <button type="button" id="btnGetLocation" 
+                                        class="inline-flex items-center px-3 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors">
+                                    <i class="fas fa-location-arrow mr-2"></i>
+                                    Gunakan lokasi perangkat
+                                </button>
+                                <span id="geoStatus" class="text-sm text-slate-600"></span>
+                            </div>
+                            <p class="text-xs text-slate-500 mt-2">Pastikan GPS aktif dan izinkan akses lokasi di browser.</p>
+                        </div>
                     </div>
 
                     <!-- Kontak -->
@@ -234,5 +245,51 @@ function previewImages(input) {
         preview.classList.add('hidden');
     }
 }
+
+// Geolocation: isi latitude/longitude dari perangkat
+document.addEventListener('DOMContentLoaded', () => {
+    const btn = document.getElementById('btnGetLocation');
+    const latInput = document.getElementById('latitude');
+    const lngInput = document.getElementById('longitude');
+    const statusEl = document.getElementById('geoStatus');
+
+    if (btn) {
+        btn.addEventListener('click', () => {
+            if (!('geolocation' in navigator)) {
+                statusEl.textContent = 'Perangkat tidak mendukung GPS/geolocation.';
+                statusEl.className = 'text-sm text-red-600';
+                return;
+            }
+
+            statusEl.textContent = 'Mengambil lokasi perangkat…';
+            statusEl.className = 'text-sm text-slate-600';
+            btn.disabled = true;
+            btn.classList.add('opacity-70', 'cursor-not-allowed');
+
+            navigator.geolocation.getCurrentPosition(
+                (pos) => {
+                    const { latitude, longitude, accuracy } = pos.coords;
+                    latInput.value = Number(latitude).toFixed(6);
+                    lngInput.value = Number(longitude).toFixed(6);
+                    statusEl.textContent = `Koordinat diambil (akurasi ±${Math.round(accuracy)}m).`;
+                    statusEl.className = 'text-sm text-green-600';
+                    btn.disabled = false;
+                    btn.classList.remove('opacity-70', 'cursor-not-allowed');
+                },
+                (err) => {
+                    let msg = 'Gagal mengambil lokasi.';
+                    if (err.code === 1) msg = 'Akses lokasi ditolak. Izinkan lokasi di browser.';
+                    else if (err.code === 2) msg = 'Lokasi tidak tersedia. Coba aktifkan GPS.';
+                    else if (err.code === 3) msg = 'Permintaan lokasi kedaluwarsa. Coba lagi.';
+                    statusEl.textContent = msg;
+                    statusEl.className = 'text-sm text-red-600';
+                    btn.disabled = false;
+                    btn.classList.remove('opacity-70', 'cursor-not-allowed');
+                },
+                { enableHighAccuracy: true, timeout: 15000, maximumAge: 0 }
+            );
+        });
+    }
+});
 </script>
 @endsection

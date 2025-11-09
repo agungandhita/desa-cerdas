@@ -32,7 +32,7 @@
                             <label for="name" class="block text-sm font-medium text-slate-700 mb-2">
                                 Nama Room Chat <span class="text-red-500">*</span>
                             </label>
-                            <input type="text" 
+                            <input type="text"
                                    class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent @error('name') border-red-500 @enderror"
                                    id="name" name="name" value="{{ old('name') }}"
                                    placeholder="Masukkan nama room chat" required>
@@ -83,7 +83,7 @@
 
                         <div class="mb-6">
                             <div class="flex items-center">
-                                <input type="checkbox" id="is_private" name="is_private" value="1" 
+                                <input type="checkbox" id="is_private" name="is_private" value="1"
                                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2"
                                        {{ old('is_private') ? 'checked' : '' }}>
                                 <label for="is_private" class="ml-2 text-sm font-medium text-slate-700">
@@ -97,7 +97,7 @@
 
                         <div class="mb-6">
                             <label for="max_participants" class="block text-sm font-medium text-slate-700 mb-2">Maksimal Peserta</label>
-                            <input type="number" 
+                            <input type="number"
                                    class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent @error('max_participants') border-red-500 @enderror"
                                    id="max_participants" name="max_participants" value="{{ old('max_participants') }}"
                                    min="2" max="1000" placeholder="Kosongkan untuk tidak terbatas">

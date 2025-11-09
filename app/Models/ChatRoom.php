@@ -142,14 +142,41 @@ class ChatRoom extends Model
         return $this->last_activity ? $this->last_activity->diffForHumans() : 'Belum ada aktivitas';
     }
 
-    public function getStatusBadgeAttribute()
+    public function getStatusLabelAttribute()
     {
-        $badges = [
-            'active' => 'bg-green-100 text-green-800',
-            'closed' => 'bg-red-100 text-red-800',
-            'archived' => 'bg-gray-100 text-gray-800'
+        $labels = [
+            'active' => 'Aktif',
+            'closed' => 'Ditutup',
+            'archived' => 'Diarsipkan',
         ];
 
-        return $badges[$this->status] ?? 'bg-gray-100 text-gray-800';
+        return $labels[$this->status] ?? ucfirst($this->status);
+    }
+
+    public function getStatusBadgeAttribute()
+    {
+        $map = [
+            'active' => [
+                'class' => 'bg-green-100 text-green-800',
+                'icon'  => 'fa-check-circle',
+            ],
+            'closed' => [
+                'class' => 'bg-red-100 text-red-800',
+                'icon'  => 'fa-pause-circle',
+            ],
+            'archived' => [
+                'class' => 'bg-gray-100 text-gray-800',
+                'icon'  => 'fa-archive',
+            ],
+        ];
+
+        $conf = $map[$this->status] ?? [
+            'class' => 'bg-gray-100 text-gray-800',
+            'icon'  => 'fa-circle',
+        ];
+
+        return '<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ' .
+               $conf['class'] . '"><i class="fas ' . $conf['icon'] .
+               ' mr-1"></i> ' . e($this->status_label) . '</span>';
     }
 }

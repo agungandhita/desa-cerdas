@@ -61,7 +61,7 @@
                 </a>
             </li>
             <li>
-                <a href="#" class="flex items-center px-3 py-2 text-sm font-medium rounded-lg transition-colors duration-200 text-slate-700 hover:bg-blue-50 hover:text-blue-700">
+                <a href="{{ route('admin.users.index') }}" class="flex items-center px-3 py-2 text-sm font-medium rounded-lg transition-colors duration-200 {{ request()->routeIs('admin.users.*') ? 'bg-blue-100 text-blue-700' : 'text-slate-700 hover:bg-blue-50 hover:text-blue-700' }}">
                     <i class="fas fa-users mr-3"></i>
                     Kelola Pengguna
                 </a>

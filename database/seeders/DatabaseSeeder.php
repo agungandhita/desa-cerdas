@@ -18,6 +18,18 @@ class DatabaseSeeder extends Seeder
         // Run User Seeder to create admin, operator, and warga users
         $this->call(UserSeeder::class);
 
+        // Seed application data for testing UI and system features
+        $this->call([
+            ApbdesSeeder::class,
+            BeritaSeeder::class,
+            ProdukUmkmSeeder::class,
+            LokasiDesaSeeder::class,
+            ForumSeeder::class,
+            KomentarForumSeeder::class,
+            PermohonanSuratSeeder::class,
+            ChatSeeder::class,
+        ]);
+
         // \App\Models\User::factory(10)->create();
 
         // \App\Models\User::factory()->create([

@@ -13,7 +13,7 @@ class ApbdesController extends Controller
      */
     public function index(Request $request)
     {
-        $query = Apbdes::where('status', 'aktif');
+        $query = Apbdes::whereIn('status', ['approved', 'executed']);
 
         // Filter by year
         $selectedYear = $request->get('tahun', date('Y'));
@@ -38,14 +38,14 @@ class ApbdesController extends Controller
                        ->paginate(15);
 
         // Get available years
-        $availableYears = Apbdes::where('status', 'aktif')
+        $availableYears = Apbdes::whereIn('status', ['approved', 'executed'])
             ->select('tahun')
             ->distinct()
             ->orderBy('tahun', 'desc')
             ->pluck('tahun');
 
         // Get available sectors/bidang
-        $availableBidang = Apbdes::where('status', 'aktif')
+        $availableBidang = Apbdes::whereIn('status', ['approved', 'executed'])
             ->where('tahun', $selectedYear)
             ->select('bidang')
             ->distinct()
@@ -54,13 +54,13 @@ class ApbdesController extends Controller
 
         // Calculate statistics for selected year
         $statistics = [
-            'total_anggaran' => Apbdes::where('status', 'aktif')
+            'total_anggaran' => Apbdes::whereIn('status', ['approved', 'executed'])
                 ->where('tahun', $selectedYear)
                 ->sum('jumlah_anggaran'),
-            'total_realisasi' => Apbdes::where('status', 'aktif')
+            'total_realisasi' => Apbdes::whereIn('status', ['approved', 'executed'])
                 ->where('tahun', $selectedYear)
                 ->sum('realisasi'),
-            'total_bidang' => Apbdes::where('status', 'aktif')
+            'total_bidang' => Apbdes::whereIn('status', ['approved', 'executed'])
                 ->where('tahun', $selectedYear)
                 ->distinct('bidang')
                 ->count('bidang'),
@@ -76,7 +76,7 @@ class ApbdesController extends Controller
         }
 
         // Get budget by sector for chart
-        $budgetBySector = Apbdes::where('status', 'aktif')
+        $budgetBySector = Apbdes::whereIn('status', ['approved', 'executed'])
             ->where('tahun', $selectedYear)
             ->selectRaw('bidang, SUM(jumlah_anggaran) as total_anggaran, SUM(realisasi) as total_realisasi')
             ->groupBy('bidang')
@@ -100,7 +100,7 @@ class ApbdesController extends Controller
     {
         $selectedYear = $request->get('tahun', date('Y'));
         
-        $apbdes = Apbdes::where('status', 'aktif')
+        $apbdes = Apbdes::whereIn('status', ['approved', 'executed'])
             ->where('tahun', $selectedYear)
             ->where('bidang', $bidang)
             ->orderBy('jumlah_anggaran', 'desc')
@@ -108,15 +108,15 @@ class ApbdesController extends Controller
 
         // Calculate sector statistics
         $sectorStats = [
-            'total_anggaran' => Apbdes::where('status', 'aktif')
+            'total_anggaran' => Apbdes::whereIn('status', ['approved', 'executed'])
                 ->where('tahun', $selectedYear)
                 ->where('bidang', $bidang)
                 ->sum('jumlah_anggaran'),
-            'total_realisasi' => Apbdes::where('status', 'aktif')
+            'total_realisasi' => Apbdes::whereIn('status', ['approved', 'executed'])
                 ->where('tahun', $selectedYear)
                 ->where('bidang', $bidang)
                 ->sum('realisasi'),
-            'jumlah_program' => Apbdes::where('status', 'aktif')
+            'jumlah_program' => Apbdes::whereIn('status', ['approved', 'executed'])
                 ->where('tahun', $selectedYear)
                 ->where('bidang', $bidang)
                 ->count()
@@ -127,7 +127,7 @@ class ApbdesController extends Controller
             : 0;
 
         // Get available years for this sector
-        $availableYears = Apbdes::where('status', 'aktif')
+        $availableYears = Apbdes::whereIn('status', ['approved', 'executed'])
             ->where('bidang', $bidang)
             ->select('tahun')
             ->distinct()
@@ -152,14 +152,14 @@ class ApbdesController extends Controller
         $year2 = $request->get('tahun2', date('Y'));
 
         // Get budget data for both years grouped by sector
-        $budgetYear1 = Apbdes::where('status', 'aktif')
+        $budgetYear1 = Apbdes::whereIn('status', ['approved', 'executed'])
             ->where('tahun', $year1)
             ->selectRaw('bidang, SUM(jumlah_anggaran) as total_anggaran, SUM(realisasi) as total_realisasi')
             ->groupBy('bidang')
             ->get()
             ->keyBy('bidang');
 
-        $budgetYear2 = Apbdes::where('status', 'aktif')
+        $budgetYear2 = Apbdes::whereIn('status', ['approved', 'executed'])
             ->where('tahun', $year2)
             ->selectRaw('bidang, SUM(jumlah_anggaran) as total_anggaran, SUM(realisasi) as total_realisasi')
             ->groupBy('bidang')
@@ -194,7 +194,7 @@ class ApbdesController extends Controller
         }
 
         // Get available years
-        $availableYears = Apbdes::where('status', 'aktif')
+        $availableYears = Apbdes::whereIn('status', ['approved', 'executed'])
             ->select('tahun')
             ->distinct()
             ->orderBy('tahun', 'desc')
@@ -216,7 +216,7 @@ class ApbdesController extends Controller
         $currentYear = date('Y');
         
         // Get yearly summary
-        $yearlySummary = Apbdes::where('status', 'aktif')
+        $yearlySummary = Apbdes::whereIn('status', ['approved', 'executed'])
             ->selectRaw('tahun, SUM(jumlah_anggaran) as total_anggaran, SUM(realisasi) as total_realisasi')
             ->groupBy('tahun')
             ->orderBy('tahun', 'desc')
@@ -224,7 +224,7 @@ class ApbdesController extends Controller
             ->get();
 
         // Get current year sector summary
-        $sectorSummary = Apbdes::where('status', 'aktif')
+        $sectorSummary = Apbdes::whereIn('status', ['approved', 'executed'])
             ->where('tahun', $currentYear)
             ->selectRaw('bidang, SUM(jumlah_anggaran) as total_anggaran, SUM(realisasi) as total_realisasi, COUNT(*) as jumlah_program')
             ->groupBy('bidang')
@@ -233,10 +233,10 @@ class ApbdesController extends Controller
 
         // Overall statistics
         $overallStats = [
-            'total_years' => Apbdes::where('status', 'aktif')->distinct('tahun')->count('tahun'),
-            'total_sectors' => Apbdes::where('status', 'aktif')->distinct('bidang')->count('bidang'),
-            'total_programs' => Apbdes::where('status', 'aktif')->count(),
-            'current_year_budget' => Apbdes::where('status', 'aktif')->where('tahun', $currentYear)->sum('jumlah_anggaran')
+            'total_years' => Apbdes::whereIn('status', ['approved', 'executed'])->distinct('tahun')->count('tahun'),
+            'total_sectors' => Apbdes::whereIn('status', ['approved', 'executed'])->distinct('bidang')->count('bidang'),
+            'total_programs' => Apbdes::whereIn('status', ['approved', 'executed'])->count(),
+            'current_year_budget' => Apbdes::whereIn('status', ['approved', 'executed'])->where('tahun', $currentYear)->sum('jumlah_anggaran')
         ];
 
         return view('frontend.apbdes.summary', compact(

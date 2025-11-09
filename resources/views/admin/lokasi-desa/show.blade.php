@@ -142,7 +142,7 @@
             <div class="bg-white rounded-lg shadow-sm border border-slate-200 p-6">
                 <h3 class="text-lg font-semibold text-slate-800 mb-4">Aksi Cepat</h3>
                 <div class="space-y-3">
-                    <form action="{{ route('admin.lokasi-desa.update-status', $lokasiDesa) }}" method="POST">
+                    <form action="{{ route('admin.lokasi-desa.updateStatus', $lokasiDesa) }}" method="POST">
                         @csrf
                         @method('PATCH')
                         <input type="hidden" name="status" value="{{ $lokasiDesa->status === 'active' ? 'inactive' : 'active' }}">
