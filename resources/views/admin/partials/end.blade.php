@@ -13,5 +13,50 @@
         placeholderText: 'Tulis konten di sini...',
         language: 'id'
     });
+
+    // Toggle Profile Dropdown
+    (function () {
+        const toggleBtn = document.getElementById('profile-toggle');
+        const dropdown = document.getElementById('profile-dropdown');
+
+        if (!toggleBtn || !dropdown) return;
+
+        const closeDropdown = () => {
+            dropdown.classList.add('hidden');
+            toggleBtn.setAttribute('aria-expanded', 'false');
+        };
+
+        const openDropdown = () => {
+            dropdown.classList.remove('hidden');
+            toggleBtn.setAttribute('aria-expanded', 'true');
+        };
+
+        toggleBtn.setAttribute('aria-haspopup', 'true');
+        toggleBtn.setAttribute('aria-expanded', 'false');
+
+        toggleBtn.addEventListener('click', function (e) {
+            e.stopPropagation();
+            if (dropdown.classList.contains('hidden')) {
+                openDropdown();
+            } else {
+                closeDropdown();
+            }
+        });
+
+        document.addEventListener('click', function (e) {
+            if (!dropdown.classList.contains('hidden')) {
+                const clickInside = dropdown.contains(e.target) || toggleBtn.contains(e.target);
+                if (!clickInside) {
+                    closeDropdown();
+                }
+            }
+        });
+
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape') {
+                closeDropdown();
+            }
+        });
+    })();
 </script>
 @stack('scripts')

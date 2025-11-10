@@ -53,10 +53,10 @@ Route::prefix('umkm')->name('umkm.')->group(function () {
 Route::prefix('layanan')->name('layanan.')->group(function () {
     Route::get('/', [LayananController::class, 'index'])->name('index');
     Route::get('/info/{jenis}', [LayananController::class, 'info'])->name('info');
-    Route::get('/ajukan/{jenis?}', [LayananController::class, 'create'])->name('create');
-    Route::post('/ajukan', [LayananController::class, 'store'])->name('store');
-    Route::get('/riwayat', [LayananController::class, 'riwayat'])->name('riwayat');
-    Route::get('/detail/{id}', [LayananController::class, 'show'])->name('show');
+    Route::get('/ajukan/{jenis?}', [LayananController::class, 'create'])->middleware(['auth', 'verified', 'role:warga'])->name('create');
+    Route::post('/ajukan', [LayananController::class, 'store'])->middleware(['auth', 'verified', 'role:warga'])->name('store');
+    Route::get('/riwayat', [LayananController::class, 'riwayat'])->middleware(['auth', 'verified', 'role:warga'])->name('riwayat');
+    Route::get('/detail/{id}', [LayananController::class, 'show'])->middleware(['auth', 'verified', 'role:warga'])->name('show');
 });
 
 // Frontend APBDes Routes
@@ -83,19 +83,26 @@ Route::prefix('forum')->name('forum.')->group(function () {
 
 // Admin Dashboard Route - redirect to admin dashboard
 Route::get('/admin/dashboard', [DashboardController::class, 'index'])
-    ->middleware(['auth', 'verified'])
+    ->middleware(['auth', 'verified', 'isAdmin'])
     ->name('admin.dashboard');
 
-// Default dashboard route - redirect to admin dashboard for authenticated users
+// Default dashboard route - redirect based on role
 Route::get('/dashboard', function () {
-    if (auth()->check()) {
+    if (!auth()->check()) {
+        return redirect()->route('home');
+    }
+
+    $user = auth()->user();
+    if ($user->can('manage-surat')) {
         return redirect()->route('admin.dashboard');
     }
-    return redirect()->route('home');
+
+    // Warga atau role lain diarahkan ke layanan publik
+    return redirect()->route('layanan.index');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-// Admin Permohonan Surat Routes
-Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(function () {
+// Admin Routes - protected by isAdmin
+Route::middleware(['auth', 'verified', 'isAdmin'])->prefix('admin')->name('admin.')->group(function () {
     // Users Management Routes
     Route::resource('users', UserController::class);
 
