@@ -100,7 +100,7 @@
                                                 </span>
                                             </div>
                                             <h3 class="text-xl font-bold text-gray-800 hover:text-blue-600 transition">
-                                                <a href="{{ route('layanan.show', $item->id) }}">{{ $item->jenis_layanan_nama }}</a>
+                                                <a href="{{ route('layanan.show', $item->id) }}">{{ $jenisLayanan[$item->jenis_surat] ?? ucwords(str_replace('_', ' ', $item->jenis_surat)) }}</a>
                                             </h3>
                                             <p class="text-sm text-gray-500 mt-1">No. #{{ $item->id }} &bull; Diajukan pada {{ $item->created_at->isoFormat('dddd, D MMMM YYYY') }}</p>
                                         </div>

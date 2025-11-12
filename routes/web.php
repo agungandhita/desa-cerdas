@@ -52,7 +52,9 @@ Route::prefix('umkm')->name('umkm.')->group(function () {
 // Frontend Layanan Publik Routes
 Route::prefix('layanan')->name('layanan.')->group(function () {
     Route::get('/', [LayananController::class, 'index'])->name('index');
-    Route::get('/info/{jenis}', [LayananController::class, 'info'])->name('info');
+    Route::get('/info/{jenis}', [LayananController::class, 'info'])
+        ->where('jenis', 'surat_keterangan_domisili|surat_keterangan_usaha|surat_keterangan_tidak_mampu|surat_pengantar_nikah|surat_keterangan_kelahiran|surat_keterangan_kematian')
+        ->name('info');
     Route::get('/ajukan/{jenis?}', [LayananController::class, 'create'])->middleware(['auth', 'verified', 'role:warga'])->name('create');
     Route::post('/ajukan', [LayananController::class, 'store'])->middleware(['auth', 'verified', 'role:warga'])->name('store');
     Route::get('/riwayat', [LayananController::class, 'riwayat'])->middleware(['auth', 'verified', 'role:warga'])->name('riwayat');

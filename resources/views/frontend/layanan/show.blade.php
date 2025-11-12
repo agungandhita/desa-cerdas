@@ -1,4 +1,4 @@
-@extends('layouts.frontend')
+@extends('frontend.layouts.main')
 
 @section('title', 'Detail Permohonan Layanan')
 
@@ -10,7 +10,7 @@
 </style>
 @endpush
 
-@section('content')
+@section('container')
 <div class="bg-gray-50">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <!-- Breadcrumb -->
@@ -18,7 +18,7 @@
             <ol class="inline-flex items-center space-x-1 md:space-x-3">
                 <li class="inline-flex items-center">
                     <a href="{{ route('home') }}" class="inline-flex items-center font-medium text-gray-700 hover:text-blue-600">
-                        <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-3a1 1 0 011-1h2a1 1 0 011 1v3a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path></svg>
+                        <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0                          20 20"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-3a1 1 0 011-1h2a1 1 0 011 1v3a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path></svg>
                         Beranda
                     </a>
                 </li>
@@ -51,7 +51,7 @@
                     <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between">
                         <div>
                             <h1 class="text-3xl font-bold text-gray-800 mb-1">
-                                {{ ucwords(str_replace('_', ' ', $permohonan->jenis_layanan)) }}
+                                {{ ucwords(str_replace('_', ' ', $permohonan->jenis_surat)) }}
                             </h1>
                             <p class="text-gray-500 text-sm">No. Permohonan: #{{ $permohonan->id }}</p>
                         </div>
@@ -78,7 +78,7 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6">
                         <div>
                             <label class="block text-sm font-medium text-gray-500 mb-1">Jenis Layanan</label>
-                            <p class="text-gray-800 font-semibold">{{ ucwords(str_replace('_', ' ', $permohonan->jenis_layanan)) }}</p>
+                            <p class="text-gray-800 font-semibold">{{ ucwords(str_replace('_', ' ', $permohonan->jenis_surat)) }}</p>
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-gray-500 mb-1">Tanggal Pengajuan</label>
@@ -123,17 +123,17 @@
                 @endif
 
                 <!-- Admin Response -->
-                @if($permohonan->keterangan_admin)
+                @if($permohonan->catatan)
                     <div class="bg-white rounded-xl shadow-lg p-6 mb-6">
                         <h2 class="text-xl font-semibold text-gray-800 mb-4">Catatan dari Admin</h2>
                         <div class="bg-gray-50 rounded-lg p-4 border border-gray-200">
-                            <p class="text-gray-700 italic">"{{ $permohonan->keterangan_admin }}"</p>
+                            <p class="text-gray-700 italic">"{{ $permohonan->catatan }}"</p>
                         </div>
                     </div>
                 @endif
 
                 <!-- Result Document -->
-                @if($permohonan->status == 'selesai' && $permohonan->file_hasil)
+                @if($permohonan->status == 'selesai' && $permohonan->file_pdf)
                     <div class="bg-gradient-to-r from-green-500 to-emerald-600 rounded-xl shadow-lg p-8">
                         <div class="flex flex-col md:flex-row items-center text-white">
                             <svg class="w-16 h-16 mb-4 md:mb-0 md:mr-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
@@ -142,7 +142,7 @@
                                 <p class="mt-1 opacity-90">Permohonan Anda telah selesai diproses. Silakan unduh dokumen hasilnya.</p>
                             </div>
                             <div class="mt-6 md:mt-0 md:ml-auto">
-                                <a href="{{ Storage::url($permohonan->file_hasil) }}" target="_blank" class="inline-flex items-center px-6 py-3 bg-white text-green-600 font-bold rounded-lg hover:bg-gray-100 transition duration-300 shadow-md">
+                                <a href="{{ Storage::url($permohonan->file_pdf) }}" target="_blank" class="inline-flex items-center px-6 py-3 bg-white text-green-600 font-bold rounded-lg hover:bg-gray-100 transition duration-300 shadow-md">
                                     <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
                                     Unduh Dokumen
                                 </a>

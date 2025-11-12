@@ -174,7 +174,7 @@
                 <div class="bg-blue-600 rounded-xl p-6 text-white">
                     <h3 class="text-xl font-bold mb-4">Siap Mengajukan?</h3>
                     <p class="mb-6">Klik tombol di bawah ini untuk memulai proses permohonan layanan.</p>
-                    <a href="{{ route('layanan.create', $jenis) }}" class="w-full block text-center bg-white text-blue-600 font-bold py-3 px-4 rounded-lg hover:bg-blue-50 transition-colors">
+                    <a href="{{ route('layanan.create', ['jenis' => $jenis]) }}" class="w-full block text-center bg-white text-blue-600 font-bold py-3 px-4 rounded-lg hover:bg-blue-50 transition-colors">
                         Ajukan Permohonan
                     </a>
                 </div>

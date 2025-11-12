@@ -80,10 +80,10 @@
                         @endif
                     </ul>
                     <div class="flex space-x-3 mt-4">
-                        <a href="{{ route('layanan.info', $service['jenis']) }}" class="flex-1 text-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 transition-colors">
+                        <a href="{{ route('layanan.info', ['jenis' => $service['jenis']]) }}" class="flex-1 text-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 transition-colors">
                             Info Lengkap
                         </a>
-                        <a href="{{ route('layanan.create', $service['jenis']) }}" class="flex-1 text-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 transition-colors">
+                        <a href="{{ route('layanan.create', ['jenis' => $service['jenis']]) }}" class="flex-1 text-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 transition-colors">
                             Ajukan Sekarang
                         </a>
                     </div>

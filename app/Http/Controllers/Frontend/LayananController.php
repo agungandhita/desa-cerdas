@@ -140,8 +140,17 @@ class LayananController extends Controller
         $permohonan = PermohonanSurat::where('user_id', Auth::id())
             ->orderBy('created_at', 'desc')
             ->paginate(10);
+        // Define service types for filter options in the view
+        $jenisLayanan = [
+            'surat_keterangan_domisili' => 'Surat Keterangan Domisili',
+            'surat_keterangan_usaha' => 'Surat Keterangan Usaha',
+            'surat_keterangan_tidak_mampu' => 'Surat Keterangan Tidak Mampu',
+            'surat_pengantar_nikah' => 'Surat Pengantar Nikah',
+            'surat_keterangan_kelahiran' => 'Surat Keterangan Kelahiran',
+            'surat_keterangan_kematian' => 'Surat Keterangan Kematian'
+        ];
 
-        return view('frontend.layanan.riwayat', compact('permohonan'));
+        return view('frontend.layanan.riwayat', compact('permohonan', 'jenisLayanan'));
     }
 
     /**
@@ -171,8 +180,8 @@ class LayananController extends Controller
                 'nama' => 'Surat Keterangan Domisili',
                 'deskripsi' => 'Surat keterangan tempat tinggal/domisili yang digunakan untuk berbagai keperluan administrasi.',
                 'persyaratan' => [
-                    'Fotocopy KTP yang masih berlaku',
-                    'Fotocopy Kartu Keluarga (KK)',
+                    'Fotokopi KTP yang masih berlaku',
+                    'Fotokopi Kartu Keluarga (KK)',
                     'Surat Pengantar dari RT/RW',
                     'Pas foto 3x4 (2 lembar)'
                 ],
@@ -183,8 +192,8 @@ class LayananController extends Controller
                 'nama' => 'Surat Keterangan Usaha',
                 'deskripsi' => 'Surat keterangan untuk keperluan usaha, perizinan, atau bantuan modal usaha.',
                 'persyaratan' => [
-                    'Fotocopy KTP yang masih berlaku',
-                    'Fotocopy Kartu Keluarga (KK)',
+                    'Fotokopi KTP yang masih berlaku',
+                    'Fotokopi Kartu Keluarga (KK)',
                     'Surat Keterangan Usaha dari RT/RW',
                     'Foto lokasi usaha',
                     'Pas foto 3x4 (2 lembar)'
@@ -192,7 +201,56 @@ class LayananController extends Controller
                 'waktu_proses' => '3-5 hari kerja',
                 'biaya' => 'Gratis'
             ],
-            // Add more service info as needed
+            'surat_keterangan_tidak_mampu' => [
+                'nama' => 'Surat Keterangan Tidak Mampu',
+                'deskripsi' => 'Surat keterangan bagi keluarga/individu yang membutuhkan untuk keperluan bantuan sosial atau administrasi.',
+                'persyaratan' => [
+                    'Fotokopi KTP yang masih berlaku',
+                    'Fotokopi Kartu Keluarga (KK)',
+                    'Surat Pengantar dari RT/RW',
+                    'Surat Keterangan Penghasilan (jika ada)',
+                    'Pas foto 3x4 (2 lembar)'
+                ],
+                'waktu_proses' => '3-5 hari kerja',
+                'biaya' => 'Gratis'
+            ],
+            'surat_pengantar_nikah' => [
+                'nama' => 'Surat Pengantar Nikah',
+                'deskripsi' => 'Surat pengantar untuk keperluan pernikahan sesuai ketentuan administrasi.',
+                'persyaratan' => [
+                    'Fotokopi KTP calon pengantin',
+                    'Fotokopi Kartu Keluarga (KK)',
+                    'Akta Kelahiran',
+                    'Surat Pengantar dari RT/RW',
+                    'Surat rekomendasi dari KUA (jika diperlukan)'
+                ],
+                'waktu_proses' => '3-5 hari kerja',
+                'biaya' => 'Gratis'
+            ],
+            'surat_keterangan_kelahiran' => [
+                'nama' => 'Surat Keterangan Kelahiran',
+                'deskripsi' => 'Surat keterangan untuk keperluan pembuatan akta kelahiran.',
+                'persyaratan' => [
+                    'Fotokopi KTP orang tua',
+                    'Fotokopi Kartu Keluarga (KK)',
+                    'Surat Keterangan Lahir dari Bidan/Dokter',
+                    'Pas foto 3x4 (2 lembar)'
+                ],
+                'waktu_proses' => '3-5 hari kerja',
+                'biaya' => 'Gratis'
+            ],
+            'surat_keterangan_kematian' => [
+                'nama' => 'Surat Keterangan Kematian',
+                'deskripsi' => 'Surat keterangan untuk keperluan administrasi terkait kematian.',
+                'persyaratan' => [
+                    'Fotokopi KTP pelapor',
+                    'Fotokopi Kartu Keluarga (KK)',
+                    'Surat Keterangan Kematian dari Dokter/RS',
+                    'Pas foto almarhum/almarhumah (jika diminta)'
+                ],
+                'waktu_proses' => '3-5 hari kerja',
+                'biaya' => 'Gratis'
+            ],
         ];
 
         $info = $layananInfo[$jenis] ?? null;
